@@ -22,20 +22,19 @@ export default class AddFolder extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const newFolder = event.target.newFolder.value;
-    this.addFolder(newFolder);
-    this.props.history.goBack();
+    if(this.context.newFolder.name.trim().length > 3){
+      const newFolder = event.target.newFolder.value;
+      this.addFolder(newFolder);
+      this.props.history.goBack();
+    }
   }
-
   updateFolderName(e) {
     const newName = e.target.value;
       this.context.updateNewFolderName(newName);
   }
 
   validateFolderName() {
-    if (this.context.newFolder.name.trim() === 0) {
-      return 'Must be more than 0 characters.'
-    } else if ( this.context.newFolder.name.trim().length <= 3 ) {
+    if ( this.context.newFolder.name.trim().length <= 3 ) {
       return 'Must be more than 3 characters.'
     }
   }
@@ -49,9 +48,8 @@ export default class AddFolder extends Component {
         <form className="add-folder-form" onSubmit={e => this.handleSubmit(e)}>
         <label htmlFor="newFolder">
           Name:
-        {this.context.newFolder.touched && (
-          <p>{this.validateFolderName()}</p>
-          )}  
+        {this.context.newFolder.touched} 
+          <p>{this.validateFolderName()}</p>  
         </label>
         <input
         type="text"
@@ -68,5 +66,6 @@ export default class AddFolder extends Component {
 }
 
 AddFolder.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object.isRequired
+
 }

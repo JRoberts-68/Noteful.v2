@@ -2,6 +2,7 @@ import React from 'react';
 import config from '../config';
 import ApiContext from '../ApiContext'
 import './AddNote.css'
+import PropTypes from 'prop-types'
 
 export default class AddNote extends React.Component {
   static contextType = ApiContext
@@ -30,19 +31,31 @@ export default class AddNote extends React.Component {
     ))
   }
 
+  canSubmit=() => {
+    if(this.context.newNote.name.value.length === 0){
+      return false
+    }
+    if(this.context.newNote.content.value.length === 0){
+      return false
+    }
+    return true
+  }
+  
+
   handleFormSubmit = e => {
     e.preventDefault(e)
-    const newNote = {
-      name: e.target.name.value,
-      content: e.target.content.value,
-      folder_id: e.target.folders.value,
-      modified: new Date(),
+    if (this.canSubmit()){
+      const newNote = {
+        name: e.target.name.value,
+        content: e.target.content.value,
+        folder_id: e.target.folders.value,
+        modified: new Date(),
+      }
+      console.log(newNote);
+      this.addNewNote(newNote)
+      this.props.history.push('/');
     }
-    console.log(newNote);
-    this.addNewNote(newNote)
-    this.props.history.push('/');
   }
-
   validateName = () => {
     if (this.context.newNote.name.value.length === 0) {
       return 'Name is required'
@@ -68,7 +81,7 @@ export default class AddNote extends React.Component {
         >
           <label htmlFor="name">
             Name
-            {this.context.newNote.name.touched && <p>{this.validateName()}</p>}
+            {this.context.newNote.name.touched} <p>{this.validateName()}</p>
           </label>
           <input
             type="text"
@@ -82,9 +95,9 @@ export default class AddNote extends React.Component {
           />
           <label htmlFor="content">
             Description
-            {this.context.newNote.content.touched && (
+            {this.context.newNote.content.touched} 
               <p>{this.validateDescription()}</p>
-            )}
+            
           </label>
           <input
             type="text"
@@ -111,3 +124,4 @@ export default class AddNote extends React.Component {
     )
   }
 }
+
