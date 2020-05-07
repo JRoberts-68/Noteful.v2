@@ -2,7 +2,6 @@ import React from 'react';
 import config from '../config';
 import ApiContext from '../ApiContext'
 import './AddNote.css'
-import PropTypes from 'prop-types'
 
 export default class AddNote extends React.Component {
   static contextType = ApiContext
@@ -85,6 +84,7 @@ export default class AddNote extends React.Component {
           </label>
           <input
             type="text"
+            required="required"
             name="name"
             id="name"
             aria-required="true"
@@ -101,6 +101,7 @@ export default class AddNote extends React.Component {
           </label>
           <input
             type="text"
+            required="required"
             name="content"
             id="content"
             aria-required="true"

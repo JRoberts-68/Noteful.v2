@@ -53,6 +53,7 @@ export default class AddFolder extends Component {
         </label>
         <input
         type="text"
+        required="required"
         name="newFolder"
         id="newFolder"
         aria-required="true"

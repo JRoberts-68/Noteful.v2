@@ -38,6 +38,9 @@ export default class Note extends React.Component {
       .catch(error => {
         console.error({ error })
       })
+      if(this.props.goToHome !== undefined){
+        this.props.goToHome()
+      }
   }
   
 
